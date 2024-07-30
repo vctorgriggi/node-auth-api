@@ -7,8 +7,8 @@ const router = Router();
 router
   .post("/", RoleController.create)
   .get("/", RoleController.get)
-  .get("/id/:id", RoleController.getById)
-  .put("/id/:id", RoleController.updateById)
-  .delete("/id/:id", RoleController.deleteById);
+  .get("/:id", RoleController.getById)
+  .put("/:id", RoleController.updateById)
+  .delete("/:id", RoleController.deleteById);
 
 module.exports = router;

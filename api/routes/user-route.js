@@ -9,10 +9,10 @@ const router = Router();
 router
   .post("/", UserController.create)
   .get("/", UserController.get)
-  .get("/id/:id", UserController.getById)
-  .put("/id/:id", UserController.updateById)
+  .get("/:id", UserController.getById)
+  .put("/:id", UserController.updateById)
   .delete(
-    "/id/:id",
+    "/:id",
     // auth,
     // permission("permission_name_here"),
     UserController.deleteById

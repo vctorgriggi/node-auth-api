@@ -5,7 +5,7 @@ const RolePermissionController = require("../controllers/role-permission-control
 const router = Router();
 
 router
-  .post("/role-id/:roleId", RolePermissionController.add)
-  .delete("/role-id/:roleId", RolePermissionController.remove);
+  .post("/:roleId", RolePermissionController.add)
+  .delete("/:roleId", RolePermissionController.remove);
 
 module.exports = router;
