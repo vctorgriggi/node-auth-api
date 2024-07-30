@@ -100,7 +100,7 @@ class UserService {
       user.name = dto.name;
       user.email = dto.email;
       user.identity = dto.identity;
-      if (dto.password) user.passwordHash = await hash(dto.password, 10);
+      user.passwordHash = await hash(dto.password, 10);
 
       await user.save();
 
