@@ -2,7 +2,7 @@ const { verify } = require("jsonwebtoken");
 
 const jsonSecret = require("../config/jsonSecret");
 
-module.exports = async (req, res, next) => {
+const auth = async (req, res, next) => {
   const token = req.cookies["authToken"];
 
   if (!token) {
@@ -14,13 +14,21 @@ module.exports = async (req, res, next) => {
   try {
     const decoded = verify(token, jsonSecret.secret);
 
+    if (!decoded.userId) {
+      return res.status(403).send({
+        message: "Invalid access token.",
+      });
+    }
+
     req.userId = decoded.userId;
 
     return next();
   } catch (error) {
-    console.error("Token verification failed:", error.stack);
+    console.error(error.stack);
     return res
       .status(403)
       .send({ message: "Invalid or expired access token." });
   }
 };
+
+module.exports = auth;

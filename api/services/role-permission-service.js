@@ -9,9 +9,9 @@ class RolePermissionService {
       throw new Error("Some data was not found.");
     }
 
-    const existingAssociation = await role.hasPermission(permission);
+    const hasAssociation = await role.hasPermission(permission);
 
-    if (existingAssociation) {
+    if (hasAssociation) {
       throw new Error("Association already exists.");
     }
 

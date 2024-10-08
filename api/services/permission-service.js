@@ -5,13 +5,13 @@ const database = require("../models");
 
 class PermissionService {
   async create(dto) {
-    const permissionByName = await database.Permissions.findOne({
+    const byName = await database.Permissions.findOne({
       where: {
         name: { [Op.iLike]: dto.name },
       },
     });
 
-    if (permissionByName) {
+    if (byName) {
       throw new Error("There is already a permission with this name.");
     }
 
@@ -66,14 +66,14 @@ class PermissionService {
       throw new Error("Permission not found.");
     }
 
-    const permissionByName = await database.Permissions.findOne({
+    const byName = await database.Permissions.findOne({
       where: {
         name: { [Op.iLike]: dto.name },
         id: { [Op.ne]: dto.id },
       },
     });
 
-    if (permissionByName) {
+    if (byName) {
       throw new Error("There is already a permission with this name.");
     }
 

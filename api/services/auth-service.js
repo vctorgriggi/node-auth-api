@@ -10,7 +10,7 @@ const mailService = new MailService();
 let { FRONTEND_URL } = process.env;
 
 class AuthService {
-  /* authentication */
+  /* sign in, sign up, sign out */
   async signIn(dto) {
     const user = await database.Users.findOne({
       where: {
@@ -64,15 +64,13 @@ class AuthService {
     const secret = jsonSecret.secret + user.passwordHash;
     const payload = { id: user.id, email: user.email };
     const token = sign(payload, secret, { expiresIn: "15m" });
-    const link = `${FRONTEND_URL}/reset-password/${user.id}/${token}`; // TODO: adapt to your frontend URL
+    const link = `${FRONTEND_URL}/url/${user.id}/${token}`; // exactly the same as the route in the frontend
 
     try {
       const subject = "Password Reset Request";
       const text = `Access the following link to reset your password: ${link}`;
 
       await mailService.sendMail(user.email, subject, text);
-
-      return;
     } catch (error) {
       console.error("Service error:", error.message);
       throw error;
@@ -102,8 +100,6 @@ class AuthService {
       user.passwordHash = await hash(dto.password, 10);
 
       await user.save();
-
-      return;
     } catch (error) {
       console.error("Service error:", error.message);
       throw error;
@@ -158,8 +154,6 @@ class AuthService {
       if (!decoded) {
         throw new Error("Invalid or expired token.");
       }
-
-      return;
     } catch (error) {
       console.error("Service error:", error.message);
       throw error;

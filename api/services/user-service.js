@@ -11,7 +11,7 @@ class UserService {
       throw new Error("Invalid identity.");
     }
 
-    const userByEmailOrIdentity = await database.Users.findOne({
+    const byEmailOrIdentity = await database.Users.findOne({
       where: {
         [Op.or]: [
           { email: { [Op.iLike]: dto.email } },
@@ -20,7 +20,7 @@ class UserService {
       },
     });
 
-    if (userByEmailOrIdentity) {
+    if (byEmailOrIdentity) {
       throw new Error("There is already a user with this email or identity.");
     }
 
@@ -82,7 +82,7 @@ class UserService {
       throw new Error("User not found.");
     }
 
-    const userByEmailOrIdentity = await database.Users.findOne({
+    const byEmailOrIdentity = await database.Users.findOne({
       where: {
         [Op.or]: [
           { email: { [Op.iLike]: dto.email } },
@@ -92,7 +92,7 @@ class UserService {
       },
     });
 
-    if (userByEmailOrIdentity) {
+    if (byEmailOrIdentity) {
       throw new Error("There is already a user with this email or identity.");
     }
 

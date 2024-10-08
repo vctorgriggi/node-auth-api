@@ -9,15 +9,20 @@ var config = {
     dialect: "sqlite",
     storage: "./db/development.sqlite",
   },
+  test: {
+    /**
+     * Set up a different database for testing.
+     */
+  },
   production: {
     username: PG_USER,
     password: PG_PASSWORD,
     database: PG_DATABASE,
     host: PG_HOST,
     dialect: "postgres",
-    dialectOptions: {
+    /* dialectOptions: {
       ssl: { require: true, rejectUnauthorized: true },
-    },
+    }, */
     connection: {
       options: `project=${ENDPOINT_ID}`,
     },

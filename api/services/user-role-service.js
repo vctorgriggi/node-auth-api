@@ -9,9 +9,9 @@ class UserRoleService {
       throw new Error("Some data was not found.");
     }
 
-    const existingAssociation = await user.hasRole(role);
+    const hasAssociation = await user.hasRole(role);
 
-    if (existingAssociation) {
+    if (hasAssociation) {
       throw new Error("Association already exists.");
     }
 

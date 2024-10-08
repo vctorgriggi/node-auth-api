@@ -3,7 +3,7 @@ const AuthService = require("../services/auth-service");
 const authService = new AuthService();
 
 class AuthController {
-  /* authentication */
+  /* sign in, sign up, sign out */
   static async signIn(req, res) {
     const { email, password } = req.body;
 
@@ -70,6 +70,7 @@ class AuthController {
       return res.status(200).json(user);
     } catch (error) {
       console.error("Controller error:", error.message);
+      res.clearCookie("authToken"); // remove invalid token
       return res.status(400).send({ message: error.message });
     }
   }

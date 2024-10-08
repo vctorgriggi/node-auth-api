@@ -5,13 +5,13 @@ const database = require("../models");
 
 class RoleService {
   async create(dto) {
-    const roleByName = await database.Roles.findOne({
+    const byName = await database.Roles.findOne({
       where: {
         name: { [Op.iLike]: dto.name },
       },
     });
 
-    if (roleByName) {
+    if (byName) {
       throw new Error("There is already a role with this name.");
     }
 
@@ -72,14 +72,14 @@ class RoleService {
       throw new Error("Role not found.");
     }
 
-    const roleByName = await database.Roles.findOne({
+    const byName = await database.Roles.findOne({
       where: {
         name: { [Op.iLike]: dto.name },
         id: { [Op.ne]: dto.id },
       },
     });
 
-    if (roleByName) {
+    if (byName) {
       throw new Error("There is already a role with this name.");
     }
 

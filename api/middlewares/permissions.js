@@ -1,7 +1,7 @@
 const database = require("../models");
 
 /* middleware to check permissions based on user's roles */
-module.exports = (permissionName) => {
+const checkPermissions = (permissionName) => {
   return async (req, res, next) => {
     try {
       const user = await database.Users.findOne({
@@ -17,9 +17,7 @@ module.exports = (permissionName) => {
               {
                 model: database.Permissions,
                 as: "permissions",
-                where: {
-                  name: permissionName,
-                },
+                where: { name: permissionName }, // check for specific permission
                 through: { attributes: [] },
               },
             ],
@@ -37,13 +35,13 @@ module.exports = (permissionName) => {
 
       if (hasPermission) {
         return next();
+      } else {
+        return res
+          .status(403)
+          .send({ message: "Authentication refused! Unauthorized action." });
       }
-
-      return res.status(403).send({
-        message: "Authentication refused! Unauthorized action.",
-      });
     } catch (error) {
-      console.error("Error occurred while checking permissions:", error.stack);
+      console.error("An issue arose while validating permissions", error.stack);
       return res.status(500).send({
         message:
           "Unable to verify permissions due to a server error. Please try again or contact support.",
@@ -51,3 +49,5 @@ module.exports = (permissionName) => {
     }
   };
 };
+
+module.exports = checkPermissions;
